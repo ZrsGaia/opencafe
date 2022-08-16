@@ -1,0 +1,76 @@
+@use "variables" as var;
+@use "media-query" as mq;
+
+.post-links {
+  margin-top: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include mq.mq("sp") {
+    margin-top: 32px;
+  }
+}
+
+.post-link__prev {
+  width: 81px;
+  font-weight: bold;
+  font-size: 16px;
+  padding-left: 17px;
+  position: relative;
+
+  @include mq.mq("sp") {
+    font-size: 14px;
+  }
+
+  // アイコン
+  img {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 6px;
+    height: 11px;
+  }
+}
+
+.post-link__list {
+  border: 1px solid var.$color-main;
+  width: 136px;
+  height: 47px;
+  line-height: 47px;
+  text-align: center;
+
+  @include mq.mq("sp") {
+    width: 112px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+  }
+}
+
+.post-link__next {
+  width: 81px;
+  font-weight: bold;
+  font-size: 16px;
+  padding-right: 17px;
+  position: relative;
+
+  @include mq.mq("sp") {
+    font-size: 14px;
+  }
+
+  // アイコン
+  img {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 6px;
+    height: 11px;
+  }
+}

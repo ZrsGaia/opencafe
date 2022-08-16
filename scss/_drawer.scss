@@ -1,0 +1,213 @@
+@use "variables" as var;
+@use "media-query" as mq;
+
+// ドロワーメニュー
+
+//ドロワーメニューのアイコン
+.drawer-icon {
+  position: fixed;
+  top: 32px;
+  right: 26px;
+  z-index: 300;
+  transition: transform 0.5s ease 0s;
+  cursor: pointer;
+
+  // 背景の円
+  .drawer-icon-background {
+    content: "";
+    top: -22px;
+    left: -16px;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: var.$color-main;
+    border-radius: 50%;
+    transition: all 0.3s ease 0s;
+
+    &.is-active {
+      background: #fff;
+    }
+  }
+
+  //サブページの場合の位置
+  &.is-sub {
+    top: 42px;
+    right: 36px;
+
+    @include mq.mq("sp") {
+      top: 33px;
+      right: 25px;
+    }
+  }
+
+  &.is-active {
+    .drawer-icon__bar1,
+    .drawer-icon__bar2,
+    .drawer-icon__bar3 {
+      background: var.$color-main;
+    }
+
+    .drawer-icon__bar1 {
+      top: 8px;
+      transform: rotate(-45deg);
+    }
+
+    .drawer-icon__bar2 {
+      display: none;
+    }
+
+    .drawer-icon__bar3 {
+      top: 8px;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+//ドロワーメニューのバー
+.drawer-icon__bars {
+  width: 28px;
+  position: relative;
+  z-index: 299;
+}
+
+.drawer-icon__bar1,
+.drawer-icon__bar2,
+.drawer-icon__bar3 {
+  position: absolute;
+  width: 100%;
+  height: 2.25px;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 50px;
+  transition: transform 0.3s ease 0s;
+}
+
+.drawer-icon__bar1 {
+  top: 0;
+}
+
+.drawer-icon__bar2 {
+  top: 6px;
+}
+
+.drawer-icon__bar3 {
+  top: 13px;
+}
+
+//ドロワーメニューのコンテンツ
+.drawer-content {
+  width: 100%;
+  max-width: 375px;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background: var.$color-main;
+  box-shadow: 0 0 3px #00000029;
+  z-index: 299;
+  transform: translateX(105%);
+  transition: transform 0.5s ease 0s;
+
+  @include mq.mq("sp") {
+    transform: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-in 0s;
+  }
+
+  &.is-active {
+    transform: none;
+
+    @include mq.mq("sp") {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.drawer-content__logo {
+  margin-top: 10px;
+  margin-left: 13px;
+  width: 120px;
+}
+
+.drawer-nav {
+  margin-top: 53px;
+  margin-left: 40px;
+  color: #fff;
+}
+
+.drawer-nav__list {
+  li {
+    transition: opacity 0.3s ease 0s;
+
+    &:not(:first-child) {
+      margin-top: 23px;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  .nav__label {
+    font-family: var.$font-family-english-Patua;
+    font-size: 24px;
+    padding-right: 21px;
+    position: relative;
+    letter-spacing: 2.88px;
+
+    //スラッシュ
+    &::after {
+      content: "／";
+      font-family: var.$font-family-japanese;
+      font-size: 10px;
+      position: absolute;
+      right: 0;
+      bottom: 4px;
+    }
+  }
+
+  .nav__description {
+    font-size: 10px;
+    margin-left: 10px;
+  }
+}
+
+.drawer-nav-sns {
+  margin-top: 36px;
+  font-size: 33px;
+  color: #fff;
+}
+
+.drawer-nav-sns__list {
+  display: flex;
+  justify-content: center;
+
+  li {
+    transition: opacity 0.3s ease 0s;
+
+    &:not(:first-child) {
+      margin-left: 40px;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.drawer-background {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(#000, 0.8);
+  z-index: 298;
+
+  &.is-active {
+    display: block;
+  }
+}

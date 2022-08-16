@@ -1,0 +1,3209 @@
+@charset "UTF-8";
+
+/******************
+  scssのインポート
+******************/
+@use "variables" as var;
+@use "drawer";
+@use "to-top";
+@use "swiper";
+@use "iframe";
+@use "media-query" as mq;
+@use "btn" as btn;
+@use "tag";
+@use "breadcrumb";
+@use "pagenation";
+@use "widget";
+@use "contact-form";
+@use "relation-news";
+@use "post-links";
+@use "recaptcha";
+
+body {
+  font-family: var.$font-family-japanese;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  background: var.$color-base-thin;
+  color: var.$color-text-black;
+}
+
+//背景のはみ出しをなくす
+.wrap {
+  overflow: hidden;
+}
+
+.inner {
+  width: var.$layout-width-inner;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 50px;
+
+  @include mq.mq("tab") {
+    padding: 0 24px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 0 20px;
+  }
+}
+
+.is-pc {
+  @include mq.mq("sp") {
+    display: none;
+  }
+}
+
+.is-sp {
+  @include mq.mq("pc") {
+    display: none;
+  }
+
+  @include mq.mq("tab") {
+    display: none;
+  }
+}
+
+/******************
+  フロントページ
+******************/
+
+// セクション共通クラス
+.section {
+  margin-top: 160px;
+
+  @include mq.mq("tab") {
+    margin-top: 140px;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 120px;
+  }
+}
+
+//セクション別見出しメイン
+.section__head-main {
+  font-family: var.$font-family-english-Amatic;
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: 9.4px;
+  line-height: (66/52);
+  text-align: center;
+
+  @include mq.mq("sp") {
+    font-size: 40px;
+    letter-spacing: 4px;
+  }
+}
+
+//セクション別見出しサブ
+.section__head-sub {
+  font-family: var.$font-family-japanese;
+  display: block;
+  margin-top: 11px;
+  font-weight: 700;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0;
+
+  @include mq.mq("sp") {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+}
+
+//top
+
+.top {
+  display: flex;
+  height: auto;
+  position: relative;
+
+  //背景色
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -35px;
+    right: 0;
+    width: 77%;
+    height: 300px;
+    background: var.$color-base-rich;
+    z-index: -1;
+
+    @include mq.mq("sp") {
+      display: none;
+    }
+  }
+}
+
+//header
+
+.header {
+  position: absolute;
+  height: 60px;
+}
+
+.header__logo {
+  display: none;
+  z-index: 100;
+  width: 120px;
+  height: 100%;
+  position: absolute;
+  top: 10px;
+  left: 13px;
+  background: url(../img/logo_light.svg) no-repeat center center/cover;
+
+  @include mq.mq("tab") {
+    display: block;
+    background: url(../img/logo_dark.svg) no-repeat center center/cover;
+  }
+
+  @include mq.mq("sp") {
+    display: block;
+  }
+
+  &.is-sub {
+    display: none;
+  }
+}
+
+//top-menu
+
+.top-menu {
+  width: 200px;
+
+  @include mq.mq("tab") {
+    display: none;
+  }
+
+  @include mq.mq("sp") {
+    display: none;
+  }
+}
+
+.top-menu__inner {
+  height: inherit;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 19px;
+
+  @include mq.mq("sp") {
+    justify-content: flex-start;
+  }
+}
+
+.top__logo {
+  transition: opacity 0.3s ease 0s;
+
+  img {
+    width: 163px;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+.global-nav {
+  margin-top: 56px;
+  text-align: center;
+}
+
+.global-nav__list {
+  li {
+    transition: all 0.3s ease 0s;
+
+    &:not(:first-child) {
+      margin-top: 26px;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    .nav__label {
+      font-family: var.$font-family-english-Patua;
+      letter-spacing: 1.92px;
+    }
+
+    .nav__description {
+      margin-top: 2px;
+      text-align: center;
+      display: block;
+      font-family: var.$font-family-japanese;
+      font-weight: 500;
+      font-size: 10px;
+    }
+  }
+}
+
+.global-nav-sns {
+  margin-top: 55px;
+}
+
+.global-nav-sns__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+
+  li {
+    transition: opacity 0.3s ease 0s;
+
+    &:not(:first-child) {
+      margin-left: 29px;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+//main-visual
+
+.main-visual {
+  width: calc(100% - 200px);
+  height: 100%;
+  margin-left: auto;
+  position: relative;
+
+  @include mq.mq("tab") {
+    width: 100%;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+  }
+}
+
+.main-visual__logo {
+  display: none;
+
+  @include mq.mq("sp") {
+    position: absolute;
+    display: inline-block;
+    top: 10px;
+    left: 14px;
+    z-index: 1;
+  }
+}
+
+.main-visual__lead {
+  position: absolute;
+  display: inline-block;
+  bottom: 48px;
+  left: 56px;
+  font-weight: 700;
+  line-height: (48/20);
+  font-size: 20px;
+  letter-spacing: 2.8px;
+  color: #fff;
+  z-index: 1;
+
+  @include mq.mq("tab") {
+    font-size: 16px;
+    letter-spacing: 2.24px;
+    left: 19px;
+    bottom: 70px;
+    line-height: (32/16);
+  }
+
+  @include mq.mq("sp") {
+    font-size: 16px;
+    letter-spacing: 2.24px;
+    left: 19px;
+    top: 124px;
+    line-height: (32/16);
+  }
+}
+
+.main-visual__pickup {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 16px 14px 16px 16px;
+  background: rgba(#fff, 0.85);
+  width: 388px;
+  z-index: 10;
+
+  @include mq.mq("sp") {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 12px;
+    bottom: 33px;
+  }
+
+  // 吹き出し
+  &::before {
+    content: "";
+    background: url(../img/img_balloon-pickup.svg) no-repeat center center/cover;
+    position: absolute;
+    width: 168px;
+    height: 109px;
+    right: 0px;
+    bottom: 120px;
+
+    @include mq.mq("sp") {
+      width: 126px;
+      height: 82px;
+      right: calc(50% - 168px);
+      bottom: 82px;
+    }
+  }
+}
+
+.main-visual__pickup-content {
+  display: flex;
+}
+
+.main-visual__pickup-img {
+  width: 120px;
+  height: 120px;
+
+  @include mq.mq("sp") {
+    width: 100px;
+    height: 100px;
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.main-visual__pickup-tag {
+  position: absolute;
+  font-size: 12px;
+  top: 8px;
+  left: -8px;
+}
+
+.main-visual__pickup-meta {
+  width: calc(100% - 120px);
+  padding-left: 16px;
+
+  @include mq.mq("sp") {
+    width: calc(100% - 100px);
+    padding-left: 17px;
+  }
+}
+
+.main-visual__pickup-date {
+  font-size: 12px;
+
+  @include mq.mq("sp") {
+    margin-top: 9px;
+  }
+}
+
+.main-visual__pickup-title {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 700;
+
+  @include mq.mq("sp") {
+    font-size: 12px;
+    line-height: (18/12);
+  }
+}
+
+//concept
+
+.concept {
+  position: relative;
+
+  @include mq.mq("sp") {
+    margin-top: 80px;
+  }
+
+  //背景色
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 93%;
+    height: 300px;
+    background: var.$color-base-rich;
+    z-index: -1;
+
+    @include mq.mq("sp") {
+      width: 95%;
+      height: 100px;
+      bottom: -50px;
+    }
+  }
+}
+
+.concept__inner {
+  padding: 36px 0 103px;
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+
+  @include mq.mq("tab") {
+    padding: 20px 0;
+  }
+
+  @include mq.mq("sp") {
+    display: block;
+    padding: 20px 0;
+  }
+
+  //コーヒー豆の背景
+  &::before {
+    content: "";
+    position: absolute;
+    background: url(../img/bg_coffee-beans.png) no-repeat center center/cover;
+    width: 296px;
+    height: 265px;
+    right: -40px;
+    top: -165px;
+    z-index: 1;
+
+    @include mq.mq("tab") {
+      width: 195px;
+      height: 180px;
+    }
+
+    @include mq.mq("sp") {
+      width: 145px;
+      height: 130px;
+      right: -17px;
+      top: -100px;
+    }
+  }
+}
+
+.concept__img {
+  width: 50%;
+
+  @include mq.mq("sp") {
+    margin-top: 66px;
+    width: 84%;
+  }
+}
+
+.concept__content {
+  width: 50%;
+  padding-top: 20px;
+  padding-right: 44px;
+  margin-left: 80px;
+
+  @include mq.mq("tab") {
+    margin: 0;
+    padding: 24px;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+  }
+}
+
+.concept__head {
+  text-align: left;
+}
+
+.concept__head-sub {
+  text-align: left;
+}
+
+.concept__title {
+  margin-top: 50px;
+  font-size: 28px;
+  line-height: (60/28);
+  font-weight: 700;
+
+  @include mq.mq("tab") {
+    margin-top: 40px;
+    font-size: 20px;
+    line-height: (40/20);
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 36px;
+    font-size: 20px;
+    line-height: (40/20);
+  }
+}
+
+.concept__message-main {
+  padding-right: 85px;
+  margin-top: 46px;
+  font-size: 14px;
+  line-height: (28/14);
+
+  @include mq.mq("tab") {
+    margin-top: 29px;
+    padding-right: 0;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 29px;
+    padding-right: 0;
+  }
+}
+
+.concept__message-sub {
+  @extend .concept__message-main;
+  margin-top: 29px;
+}
+
+.concept__more-link {
+  margin-top: 54px;
+
+  @include mq.mq("sp") {
+    text-align: center;
+  }
+}
+
+//special-lunch
+
+.special-lunch {
+  margin-top: 240px;
+  background: var.$color-base-rich;
+
+  @include mq.mq("tab") {
+    margin-top: 170px;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 170px;
+  }
+}
+
+.special-lunch__inner {
+  position: relative;
+  padding: 80px 50px;
+
+  @include mq.mq("tab") {
+    padding: 60px 24px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 60px 0;
+  }
+
+  //葉っぱの背景
+  &::after {
+    content: "";
+    position: absolute;
+    background: url(../img/bg_coffee-leaves.png) no-repeat center center/cover;
+    width: 201px;
+    height: 228px;
+    right: -35px;
+    top: -129px;
+
+    @include mq.mq("tab") {
+      width: 151px;
+      height: 178px;
+    }
+
+    @include mq.mq("sp") {
+      top: -176px;
+      right: -33px;
+      width: 119px;
+      height: 135px;
+    }
+  }
+}
+
+.special-lunch__content {
+  position: relative;
+  margin-top: 60px;
+  background: #fff;
+  padding: 60px 40px 40px;
+
+  @include mq.mq("tab") {
+    padding: 50px 20px 20px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 40px 20px 20px;
+  }
+
+  //リボンテキスト
+  &::before {
+    content: "";
+    position: absolute;
+    top: -79px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 352px;
+    height: 160px;
+    background: url(../img/img_ribbon-text.svg) no-repeat center center /
+      contain;
+
+    @include mq.mq("sp") {
+      top: -21px;
+      width: 290px;
+      height: 38px;
+      background: url(../img/sp/img_ribbon-text_sp.svg) no-repeat center center /
+        contain;
+    }
+  }
+
+  //吹き出し
+  &::after {
+    content: "";
+    position: absolute;
+    right: calc(50% - 614px);
+    top: -72px;
+    width: 307px;
+    height: 160px;
+    background: url(../img/img_balloon-special-lunch-set.svg) no-repeat center
+      center/contain;
+
+    @include mq.mq("tab") {
+      right: calc(50% - 288px);
+      top: -300px;
+    }
+
+    @include mq.mq("sp") {
+      width: 206px;
+      height: 107px;
+      right: calc(50% - 208px);
+      top: -234px;
+    }
+  }
+}
+
+.special-pasta__items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.special-pasta__item {
+  @include mq.mq("pc") {
+    // アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(25% - 20px * 3 / 4);
+
+    &:not(:first-child) {
+      margin-left: 20px;
+    }
+
+    //偶数のアイテムの位置を下にずらす
+    &:nth-child(2n) {
+      margin-top: 40px;
+    }
+  }
+
+  @include mq.mq("tab") {
+    // アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(50% - 20px * 1 / 2);
+
+    //最初のアイテムにはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 20px;
+    }
+
+    //3つめ以降のカードアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 20px;
+    }
+  }
+
+  @include mq.mq("sp") {
+    // アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(50% - 20px * 1 / 2);
+
+    //最初のアイテムにはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 20px;
+    }
+
+    //3つめ以降のカードアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 20px;
+    }
+  }
+}
+
+.special-pasta__content {
+  margin-top: 16px;
+  display: flex;
+
+  @include mq.mq("sp") {
+    margin-top: 8px;
+  }
+}
+
+.special-pasta__title {
+  width: calc(100% - 49px);
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 12px;
+  line-height: (26/18);
+
+  @include mq.mq("sp") {
+    width: calc(100% - 24px);
+    font-size: 14px;
+    line-height: (20/14);
+    margin-left: 6px;
+  }
+}
+
+.special-pasta__icon {
+  width: 49px;
+  height: 49px;
+  text-align: center;
+  line-height: 49px;
+  font-size: 32px;
+  font-family: var.$font-family-english-Patua;
+  background: var.$color-text-black;
+  color: #fff;
+
+  @include mq.mq("sp") {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 19px;
+  }
+}
+
+.special-lunch__set {
+  margin-top: 60px;
+  background: #f7f6f4;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 18px 26px 20px 70px;
+
+  @include mq.mq("tab") {
+    margin-top: 24px;
+    display: block;
+    padding: 20px 5px 17px;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 24px;
+    display: block;
+    padding: 20px 5px 17px;
+  }
+}
+
+.special-lunch__img {
+  width: 700px;
+
+  @include mq.mq("tab") {
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 5px;
+    width: 100%;
+  }
+}
+
+.special-lunch__meta {
+  display: inline-block;
+  width: 264px;
+  margin-left: 40px;
+  padding-right: 44px;
+
+  @include mq.mq("tab") {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+.special-lunch__title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: (29/20);
+
+  @include mq.mq("tab") {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  @include mq.mq("sp") {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 22px;
+  }
+
+  span {
+    display: block;
+    text-align: right;
+
+    @include mq.mq("tab") {
+      text-align: center;
+    }
+
+    @include mq.mq("sp") {
+      text-align: center;
+    }
+  }
+}
+
+.special-lunch__price {
+  display: inline-block;
+  font-family: var.$font-family-english-Damion;
+  line-height: 1;
+  margin-top: 13px;
+  font-size: 60px;
+  padding-bottom: 18px;
+
+  background-image: linear-gradient(to right, #000 4px, transparent 4px);
+  background-size: 12px 4px;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+
+  @include mq.mq("sp") {
+    margin-top: 9px;
+    font-size: 40px;
+    padding-bottom: 14px;
+  }
+}
+
+.special-lunch__time {
+  margin-top: 11px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+
+  @include mq.mq("tab") {
+    text-align: center;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 9px;
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+//menu
+
+.menu {
+  position: relative;
+
+  //背景色
+  &::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    width: 80%;
+    height: 87.6%;
+    background: var.$color-base-rich;
+
+    @include mq.mq("sp") {
+      width: 73%;
+      bottom: -2px;
+      height: 91.7%;
+    }
+  }
+}
+
+.menu__inner {
+  padding: 0 90px 80px;
+  position: relative;
+
+  @include mq.mq("tab") {
+    padding: 0 24px 63px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 0 20px 63px;
+  }
+
+  //葉っぱの背景
+  &::before {
+    content: "";
+    position: absolute;
+    background: url(../img/bg_coffee-leaves2.png) no-repeat center center/cover;
+    width: 296px;
+    height: 397px;
+    left: -50px;
+    top: -295px;
+
+    @include mq.mq("tab") {
+      width: 246px;
+      height: 347px;
+    }
+
+    @include mq.mq("sp") {
+      width: 190px;
+      height: 191px;
+      top: -200px;
+    }
+  }
+
+  //珈琲豆の背景
+  &::after {
+    content: "";
+    position: absolute;
+    background: url(../img/bg_coffee-beans2.png) no-repeat center center/cover;
+    width: 400px;
+    height: 329px;
+    right: -140px;
+    bottom: -115px;
+
+    @include mq.mq("tab") {
+      width: 200px;
+      height: 164px;
+      right: -20px;
+      bottom: -100px;
+    }
+
+    @include mq.mq("sp") {
+      width: 169px;
+      height: 143px;
+      right: -39px;
+      bottom: -100px;
+    }
+  }
+}
+
+.menu__content {
+  margin-top: 38px;
+  position: relative;
+}
+
+.menu__title {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 6px 20px;
+  border-top: 2px solid var.$color-text-black;
+  border-bottom: 2px solid var.$color-text-black;
+  position: relative;
+
+  @include mq.mq("sp") {
+    font-size: 20px;
+    padding: 6px 10px;
+  }
+
+  &:not(:first-child) {
+    margin-top: 106px;
+
+    @include mq.mq("sp") {
+      margin-top: 44px;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    background: var.$color-text-black;
+    width: 100%;
+    height: 1px;
+    top: 4px;
+    left: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    background: var.$color-text-black;
+    width: 100%;
+    height: 1px;
+    bottom: 4px;
+    left: 0;
+  }
+}
+
+.menu__items {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+
+  @include mq.mq("sp") {
+    margin-top: 14px;
+  }
+}
+
+.menu__item {
+  @include mq.mq("pc") {
+    // アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(33.3% - 36px * 2 / 3);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(3n + 1)) {
+      margin-left: 36px;
+    }
+
+    //4つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 4) {
+      margin-top: 45px;
+    }
+  }
+
+  @include mq.mq("tab") {
+    // アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(33.3% - 36px * 2 / 3);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(3n + 1)) {
+      margin-left: 36px;
+    }
+
+    //4つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 4) {
+      margin-top: 45px;
+    }
+  }
+
+  @include mq.mq("sp") {
+    // アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(50% - 19px * 1 / 2);
+
+    //最初のアイテムにはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 19px;
+    }
+
+    //3つめ以降のカードアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 23px;
+    }
+  }
+}
+
+.menu__item-img {
+  border: 8px solid #fff;
+  box-sizing: border-box;
+
+  @include mq.mq("sp") {
+    border: 4px solid #fff;
+  }
+}
+
+.menu__item-title {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 700;
+
+  @include mq.mq("sp") {
+    font-size: 14px;
+    line-height: (20/14);
+  }
+}
+
+.menu__item-price {
+  margin-top: 4px;
+  font-family: var.$font-family-english-Damion;
+  font-size: 32px;
+  line-height: 1;
+
+  @include mq.mq("sp") {
+    font-size: 24px;
+  }
+}
+
+.drink-items {
+  margin-top: 24px;
+  display: flex;
+
+  @include mq.mq("sp") {
+    margin-top: 15px;
+  }
+}
+
+.drink-item__img {
+  @extend .menu__item-img;
+  width: 342.3px;
+  display: none;
+
+  @include mq.mq("pc") {
+    display: block;
+  }
+}
+
+.drink-item__list-title {
+  font-size: 16px;
+  font-weight: 700;
+  padding-bottom: 12px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var.$color-text-black;
+  }
+}
+
+.drink-item__lists {
+  width: calc(100% - 342.3px);
+  padding-left: 62px;
+  display: flex;
+
+  @include mq.mq("tab") {
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
+  }
+
+  @include mq.mq("sp") {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    padding: 0 20px;
+  }
+}
+
+.drink-item__list {
+  // アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+  width: calc(33.3% - 46px * 2 / 3);
+  font-size: 14px;
+  font-weight: 700;
+
+  @include mq.mq("tab") {
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+  }
+
+  &:not(:first-child) {
+    margin-left: 46px;
+
+    @include mq.mq("sp") {
+      margin-left: 0px;
+      margin-top: 41px;
+    }
+  }
+
+  dl {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:not(:first-child) {
+      margin-top: 13px;
+    }
+  }
+
+  dt,
+  dd {
+    display: inline-block;
+  }
+
+  dd {
+    text-align: right;
+    font-size: 20px;
+    font-family: var.$font-family-english-Damion;
+    line-height: 1;
+  }
+}
+
+.menu__other-link {
+  text-align: center;
+  margin-top: 60px;
+
+  @include mq.mq("sp") {
+    margin-top: 41px;
+  }
+}
+
+//gallery
+
+.gallery {
+  background: var.$color-base-rich;
+}
+
+.gallery__head {
+  position: relative;
+
+  //吹き出し
+  &::before {
+    content: "";
+    position: absolute;
+    left: calc(50% - 344px);
+    top: -98px;
+    width: 265px;
+    height: 138px;
+    background: url(../img/img_balloon-gallery.svg) no-repeat center center /
+      contain;
+
+    @include mq.mq("tab") {
+      left: calc(50% - 324px);
+      top: -80px;
+    }
+
+    @include mq.mq("sp") {
+      width: 200px;
+      height: 104px;
+      left: calc(50% - 210px);
+      top: -115px;
+    }
+  }
+}
+
+.gallery__inner {
+  padding: 80px 90px;
+  position: relative;
+
+  @include mq.mq("tab") {
+    padding: 24px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 60px 20px 103px;
+  }
+}
+
+.gallery__images {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery__image {
+  @include mq.mq("pc") {
+    //アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(25% - 24px * 3 / 4);
+
+    //最初のカードアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(4n + 1)) {
+      margin-left: 24px;
+    }
+
+    //5つめ以降のカードアイテムに対しmargin-topをつける
+    &:nth-child(n + 5) {
+      margin-top: 45px;
+    }
+  }
+
+  @include mq.mq("tab") {
+    //アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(50% - 19px * 1 / 2);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 19px;
+    }
+
+    //3つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 19px;
+    }
+  }
+
+  @include mq.mq("sp") {
+    //アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+    width: calc(50% - 19px * 1 / 2);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 19px;
+    }
+
+    //3つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 19px;
+    }
+  }
+}
+
+.gallery__instagram-link {
+  text-align: center;
+  margin-top: 65px;
+
+  @include mq.mq("sp") {
+    margin-top: 41px;
+  }
+}
+
+//news
+
+.news {
+  background: var.$color-base-thin;
+  margin-top: 82px;
+}
+
+.news__inner {
+  padding: 40px 90px;
+  position: relative;
+
+  @include mq.mq("tab") {
+    padding: 40px 24px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 40px 20px;
+  }
+
+  //サラダの背景
+  &::after {
+    content: "";
+    position: absolute;
+    left: -110px;
+    top: -224px;
+    width: 400px;
+    height: 320px;
+    background: url(../img/bg_plate.png) no-repeat center center/contain;
+    z-index: 1;
+
+    @include mq.mq("tab") {
+      left: -140px;
+    }
+
+    @include mq.mq("sp") {
+      top: -87px;
+      width: 204px;
+      height: 185px;
+      left: -52px;
+    }
+  }
+}
+
+.news__items {
+  margin-top: 38px;
+  display: flex;
+
+  @include mq.mq("sp") {
+    display: block;
+  }
+}
+
+.news__item-top {
+  width: 510px;
+
+  @include mq.mq("tab") {
+    width: 50%;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+  }
+
+  .news__item {
+    position: relative;
+  }
+
+  .news__item-img {
+    overflow: hidden;
+
+    img {
+      max-height: 320px;
+      transition: transform 0.3s ease 0s;
+      object-fit: cover;
+
+      //画像をホバー時少しだけ大きくする
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      @include mq.mq("tab") {
+        max-height: 210px;
+      }
+
+      @include mq.mq("sp") {
+        max-height: 210px;
+      }
+    }
+  }
+
+  .news__item-title {
+    margin-top: 18px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: (32/20);
+
+    @include mq.mq("sp") {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: (24/14);
+    }
+  }
+
+  .news__item-text {
+    font-size: 14px;
+    margin-top: 10px;
+    line-height: (24/14);
+
+    @include mq.mq("sp") {
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: (18/12);
+    }
+  }
+
+  .news__item-date {
+    font-size: 14px;
+    margin-top: 16px;
+
+    @include mq.mq("sp") {
+      font-size: 12px;
+    }
+  }
+
+  .news__item-tag {
+    position: absolute;
+    top: 25px;
+    left: -8px;
+
+    .tag-ribbon {
+      span {
+        padding: 0 17px 0 14px;
+      }
+    }
+
+    @include mq.mq("sp") {
+      font-size: 12px;
+    }
+  }
+}
+
+.news__items-sub {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  margin-left: 38px;
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 20px;
+  }
+
+  .news__item {
+    position: relative;
+
+    @include mq.mq("pc") {
+      width: calc(50% - 30px * 3 / 4);
+
+      //3つめ以降のカードアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 31px;
+      }
+
+      //最初のカードアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 45px;
+      }
+    }
+
+    @include mq.mq("tab") {
+      //アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+      width: calc(50% - 19px * 1 / 2);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 19px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 25px;
+      }
+    }
+
+    @include mq.mq("sp") {
+      //アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+      width: calc(50% - 19px * 1 / 2);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 19px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 19px;
+      }
+    }
+
+    .news__item-img {
+      img {
+        max-height: 159px;
+
+        @include mq.mq("tab") {
+          max-height: 99px;
+        }
+
+        @include mq.mq("sp") {
+          max-height: 99px;
+        }
+      }
+    }
+
+    .news__item-tag {
+      position: absolute;
+      left: -8px;
+      top: 13px;
+
+      .tag-ribbon {
+        font-size: 12px;
+      }
+
+      @include mq.mq("sp") {
+        top: 9px;
+      }
+    }
+
+    .news__item-title {
+      font-weight: 700;
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: (24/14);
+
+      @include mq.mq("sp") {
+        font-size: 12px;
+        margin-top: 5px;
+        line-height: (18/12);
+      }
+    }
+
+    .news__item-date {
+      margin-top: 11px;
+      font-size: 12px;
+
+      @include mq.mq("sp") {
+        margin-top: 9px;
+      }
+    }
+  }
+}
+
+.news__link {
+  margin-top: 56px;
+  text-align: center;
+
+  @include mq.mq("sp") {
+    margin-top: 37px;
+  }
+}
+
+//access
+
+.access {
+  background: var.$color-base-rich;
+  margin-top: 131px;
+
+  @include mq.mq("sp") {
+    margin-top: 127px;
+  }
+}
+
+.access__head {
+  position: relative;
+
+  //吹き出し
+  &::before {
+    content: "";
+    position: absolute;
+    top: -130px;
+    left: calc(50% - 305px);
+    width: 233px;
+    height: 200px;
+    background: url(../img/img_balloon-access.svg) no-repeat center
+      center/contain;
+
+    @include mq.mq("tab") {
+      left: calc(50% - 258px);
+    }
+
+    @include mq.mq("sp") {
+      width: 200px;
+      height: 172px;
+      top: -121px;
+      left: calc(50% - 218px);
+    }
+  }
+}
+
+.access__content {
+  margin-top: 40px;
+
+  @include mq.mq("sp") {
+    margin-top: 36px;
+  }
+}
+
+.access__map {
+  border: 10px solid #fff;
+  box-sizing: border-box;
+
+  @include mq.mq("sp") {
+    border: 5px solid #fff;
+  }
+}
+
+.access__inner {
+  position: relative;
+  padding: 82px 0;
+  max-width: 688px;
+  width: 100%;
+
+  @include mq.mq("tab") {
+    padding: 80px 24px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 80px 20px;
+  }
+
+  //パンの背景
+  &::before {
+    content: "";
+    position: absolute;
+    right: -381px;
+    top: -175px;
+    width: 400px;
+    height: 359px;
+    background: url(../img/bg_bread.png) no-repeat center center / contain;
+    z-index: 1;
+
+    @include mq.mq("tab") {
+      right: -64px;
+      top: -150px;
+      width: 300px;
+      height: 259px;
+    }
+
+    @include mq.mq("sp") {
+      right: -34px;
+      top: -100px;
+      width: 188px;
+      height: 180px;
+    }
+  }
+
+  //コーヒー豆の背景
+  &::after {
+    content: "";
+    position: absolute;
+    left: -408px;
+    bottom: -140px;
+    width: 400px;
+    height: 288px;
+    background: url(../img/bg_coffee-beans3.png) no-repeat center center /
+      contain;
+
+    @include mq.mq("tab") {
+      width: 300px;
+      height: 188px;
+      bottom: -135px;
+      left: -70px;
+    }
+
+    @include mq.mq("sp") {
+      width: 126px;
+      height: 114px;
+      bottom: -59px;
+      left: -34px;
+    }
+  }
+}
+
+.access__info {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 40px;
+  display: flex;
+
+  @include mq.mq("sp") {
+    margin-top: 44px;
+    display: block;
+  }
+}
+
+.access__info-block {
+  //アイテムの幅 calc(アイテム一つ当たりの幅 - アイテム間の隙間 * アイテム間の隙間数)/アイテム数
+  width: calc(50% - 40px * 1 / 2);
+
+  &:not(:first-child) {
+    margin-left: 40px;
+
+    @include mq.mq("sp") {
+      margin-left: 0;
+    }
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    &:not(:first-child) {
+      margin-top: 21px;
+    }
+  }
+
+  dl {
+    display: flex;
+    position: relative;
+    padding-bottom: 15px;
+
+    &:not(:first-child) {
+      margin-top: 21px;
+
+      @include mq.mq("sp") {
+        margin-top: 17px;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var.$color-text-black;
+    }
+  }
+
+  dt {
+    width: 80px;
+  }
+}
+
+//footer
+
+.footer {
+  background: #382620;
+}
+.footer__inner {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.footer-nav-sns {
+  margin-top: 14px;
+}
+
+.footer-nav-sns__list {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+
+  @include mq.mq("sp") {
+    font-size: 27px;
+  }
+
+  li {
+    transition: opacity 0.3s ease 0s;
+
+    &:not(:first-child) {
+      margin-left: 29px;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.footer__copy-right {
+  margin-top: 35px;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+}
+
+/******************
+  サブページ
+******************/
+
+//top-sub
+.top-sub {
+  background: url(../img/img_firstview_concept.png) no-repeat center center /
+    cover;
+  position: relative;
+
+  //背景に黒く薄い影をつける
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    background: #000;
+  }
+
+  &.is-concept {
+    background: url(../img/img_firstview_concept.png) no-repeat center center /
+      cover;
+  }
+
+  &.is-menu {
+    background: url(../img/img_firstview_menu.png) no-repeat center center /
+      cover;
+  }
+
+  &.is-news {
+    background: url(../img/img_firstview_news.png) no-repeat center center /
+      cover;
+  }
+
+  &.is-shop {
+    background: url(../img/img_firstview_shop.png) no-repeat center center /
+      cover;
+  }
+
+  &.is-gift {
+    background: url(../img/img_firstview_gift.png) no-repeat center center /
+      cover;
+  }
+
+  &.is-contact {
+    background: url(../img/img_firstview_contact.png) no-repeat center center /
+      cover;
+  }
+}
+
+.top-sub__inner {
+  position: relative;
+  padding: 100px 0;
+
+  @include mq.mq("sp") {
+    padding: 27px 0;
+  }
+
+  //内側の枠線
+  &::before {
+    content: "";
+    border: 1px solid #fff;
+    position: absolute;
+    top: 16px;
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+
+    @include mq.mq("sp") {
+      top: 11px;
+      bottom: 11px;
+      right: 11px;
+      left: 11px;
+    }
+  }
+
+  //外側の枠線
+  &::after {
+    content: "";
+    border: 2px solid #fff;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+
+    @include mq.mq("sp") {
+      top: 6px;
+      bottom: 6px;
+      right: 6px;
+      left: 6px;
+    }
+  }
+}
+
+.top-sub__title-main {
+  padding-top: 10px;
+  color: #fff;
+  font-size: 72px;
+  text-align: center;
+  line-height: 1;
+  letter-spacing: 14.4px;
+  font-family: var.$font-family-english-Amatic;
+  font-weight: 700;
+
+  @include mq.mq("sp") {
+    padding-top: 8px;
+    font-size: 32px;
+    letter-spacing: 6.4px;
+  }
+}
+
+.top-sub__title-sub {
+  padding-top: 13px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 1.28px;
+
+  @include mq.mq("sp") {
+    font-size: 12px;
+    letter-spacing: 0.96px;
+    padding-top: 6px;
+  }
+}
+
+//concept-sub
+
+.concept-sub__inner {
+  padding: 0 90px 114px;
+
+  @include mq.mq("tab") {
+    padding: 10px 24px 69px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 3px 10px 69px;
+  }
+}
+
+.concept-sub__concept-items {
+  margin-top: 80px;
+
+  @include mq.mq("tab") {
+    margin-top: 60px;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 44px;
+  }
+}
+
+.concept-sub__concept-item {
+  display: flex;
+  position: relative;
+
+  @include mq.mq("tab") {
+    display: block;
+    padding: 0 10px;
+  }
+
+  @include mq.mq("sp") {
+    display: block;
+    padding: 0 10px;
+  }
+
+  &:nth-child(1n) {
+    //背景
+    &::before {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      bottom: -100px;
+      right: -207px;
+      background: var.$color-base-rich;
+      width: 100%;
+      height: 200px;
+
+      @include mq.mq("sp") {
+        bottom: -50px;
+        right: -9px;
+        width: 94%;
+        height: 100px;
+      }
+    }
+
+    .concept-sub__concept-item-title {
+      margin-top: 91px;
+
+      @include mq.mq("tab") {
+        margin-top: 0;
+      }
+
+      @include mq.mq("sp") {
+        margin-top: 0;
+      }
+    }
+
+    .concept-sub__concept-item-lead {
+      margin-top: 27px;
+
+      @include mq.mq("sp") {
+        margin-top: 30px;
+      }
+    }
+  }
+
+  &:nth-child(2n) {
+    margin-top: 200px;
+
+    @include mq.mq("sp") {
+      margin-top: 125px;
+    }
+
+    //背景
+    &::before {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      bottom: -59px;
+      left: -105px;
+      background: var.$color-base-rich;
+      width: 54%;
+      height: 437px;
+
+      @include mq.mq("sp") {
+        bottom: -22px;
+        left: -10px;
+        width: 80%;
+        height: 228px;
+      }
+    }
+
+    //偶数のアイテムは画像と文章の位置を入れ替える
+    flex-direction: row-reverse;
+
+    //偶数のアイテムはマージンの値を入れ替える
+    .concept-sub__concept-item-content {
+      margin-right: 0;
+      margin-left: 71px;
+
+      @include mq.mq("tab") {
+        margin-left: 0;
+      }
+
+      @include mq.mq("sp") {
+        margin-left: 0;
+      }
+    }
+
+    .concept-sub__concept-item-title {
+      margin-top: 64px;
+
+      @include mq.mq("tab") {
+        margin-top: 0;
+      }
+
+      @include mq.mq("sp") {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &:nth-child(3n) {
+    margin-top: 200px;
+
+    @include mq.mq("sp") {
+      margin-top: 97px;
+    }
+
+    //背景
+    &::before {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      bottom: -78px;
+      right: -98px;
+      background: var.$color-base-rich;
+      width: 37%;
+      height: 520px;
+
+      @include mq.mq("sp") {
+        right: 10px;
+        height: 239px;
+        width: 52%;
+        bottom: -36px;
+      }
+    }
+
+    .concept-sub__concept-item {
+      @include mq.mq("sp") {
+        margin-top: 111px;
+      }
+    }
+
+    .concept-sub__concept-item-title {
+      margin-top: 25px;
+    }
+
+    .concept-sub__concept-item-lead {
+      margin-top: 52px;
+
+      @include mq.mq("sp") {
+        margin-top: 30px;
+      }
+    }
+
+    .concept-sub__concept-item-img {
+      @include mq.mq("sp") {
+        width: 88%;
+        margin-top: 36px;
+      }
+    }
+  }
+}
+
+.concept-sub__concept-item-img {
+  width: 640px;
+
+  @include mq.mq("tab") {
+    width: 100%;
+    margin-top: 36px;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin-top: 36px;
+  }
+}
+
+.concept-sub__concept-item-content {
+  width: calc(100% - (640px + 71px));
+  margin-right: 71px;
+
+  @include mq.mq("tab") {
+    width: 100%;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+.concept-sub__concept-item-title {
+  font-size: 28px;
+  line-height: (60/28);
+  font-weight: 700;
+
+  @include mq.mq("sp") {
+    font-size: 20px;
+    line-height: (40/20);
+  }
+}
+
+.concept-sub__concept-item-lead {
+  font-size: 14px;
+  line-height: (28/14);
+}
+
+//menu-sub
+
+.menu-sub__inner {
+  width: 100%;
+  max-width: 1200px;
+  padding-bottom: 44px;
+
+  @include mq.mq("tab") {
+    max-width: 700px;
+  }
+
+  @include mq.mq("sp") {
+    padding-bottom: 36px;
+  }
+}
+
+.tab__menus {
+  margin: 80px auto 0;
+  max-width: 840px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @include mq.mq("tab") {
+    max-width: 100%;
+  }
+
+  @include mq.mq("sp") {
+    margin: 60px auto 0;
+    max-width: 100%;
+  }
+}
+
+.tab__menu {
+  position: relative;
+  background: var.$color-btn-disable;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+
+  @include mq.mq("pc") {
+    width: calc(25% - 14px * 3 / 4);
+    height: 70px;
+    &:not(:first-child) {
+      margin-left: 14px;
+    }
+  }
+
+  @include mq.mq("tab") {
+    width: calc(25% - 14px * 3 / 4);
+    height: 70px;
+    &:not(:first-child) {
+      margin-left: 14px;
+    }
+  }
+
+  @include mq.mq("sp") {
+    width: calc(50% - 11px * 1 / 2);
+    height: 62px;
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 11px;
+    }
+
+    //3つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 14px;
+    }
+  }
+
+  &:hover {
+    background: var.$color-main;
+  }
+
+  //内側の枠線
+  &::before {
+    content: "";
+    border: 1px solid #fff;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    right: 4px;
+    left: 4px;
+  }
+
+  span {
+    font-weight: 700;
+    line-height: (20/16);
+    text-align: center;
+    color: #fff;
+    display: block;
+
+    @include mq.mq("sp") {
+      font-size: 14px;
+    }
+
+    // 文字を上下左右中央に配置
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &:hover,
+  &.is-active {
+    background: var.$color-main;
+  }
+}
+
+.tab__items {
+  margin-top: 80px;
+
+  @include mq.mq("sp") {
+    margin-top: 60px;
+  }
+}
+
+.tab__item {
+  transition: all 0.3s ease 0s;
+}
+
+.menu-sub__items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu-sub__item {
+  @include mq.mq("pc") {
+    width: calc(25% - 40px * 3 / 4);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(4n + 1)) {
+      margin-left: 40px;
+    }
+
+    //5つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 5) {
+      margin-top: 46px;
+    }
+  }
+
+  @include mq.mq("tab") {
+    width: calc(50% - 40px * 1 / 2);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 40px;
+    }
+
+    //3つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 30px;
+    }
+  }
+
+  @include mq.mq("sp") {
+    width: calc(50% - 13px * 1 / 2);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 13px;
+    }
+
+    //3つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 26px;
+    }
+  }
+}
+
+.menu-sub__item-title {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: (20/14);
+
+  @include mq.mq("sp") {
+    margin-top: 7px;
+  }
+}
+
+.menu-sub__item-price {
+  font-family: var.$font-family-english-Damion;
+  text-align: center;
+  font-size: 24px;
+  line-height: 1;
+  margin-top: 5px;
+}
+
+//news-sub
+
+.news-sub__inner {
+  padding: 15px 90px 37px;
+
+  @include mq.mq("tab") {
+    padding: 10px 24px 37px;
+  }
+
+  @include mq.mq("sp") {
+    padding: 3px 10px 33px;
+  }
+}
+
+.news-sub__content {
+  display: flex;
+
+  @include mq.mq("tab") {
+    display: block;
+  }
+
+  @include mq.mq("sp") {
+    display: block;
+    padding: 0 10px;
+  }
+}
+
+.news-sub__category {
+  margin-top: 61px;
+  font-size: 24px;
+  font-weight: 700;
+
+  @include mq.mq("sp") {
+    margin-top: 48px;
+    font-size: 20px;
+  }
+}
+
+.news-sub__article {
+  width: calc(100% - (300px + 62px));
+
+  @include mq.mq("tab") {
+    width: 100%;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+  }
+}
+
+.news-sub__items {
+  margin-top: 23px;
+  display: flex;
+  flex-wrap: wrap;
+
+  @include mq.mq("sp") {
+    margin-top: 38px;
+  }
+
+  .news__item {
+    position: relative;
+    padding: 0 7px;
+    width: calc(50% - 29px * 1 / 2);
+
+    //最初のアイテム要素にはmargin-leftを適用しない
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 25px;
+    }
+
+    //3つめ以降のアイテムに対しmargin-topをつける
+    &:nth-child(n + 3) {
+      margin-top: 38px;
+    }
+
+    @include mq.mq("tab") {
+      width: calc(50% - 19px * 1 / 2);
+      padding: 0;
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 19px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 22px;
+      }
+    }
+
+    @include mq.mq("sp") {
+      width: calc(50% - 19px * 1 / 2);
+      padding: 0;
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 19px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 23px;
+      }
+    }
+
+    .news__item-tag {
+      position: absolute;
+      top: 17px;
+      left: 0px;
+
+      @include mq.mq("tab") {
+        left: -8px;
+        top: 9px;
+      }
+
+      @include mq.mq("sp") {
+        left: -8px;
+        top: 9px;
+      }
+    }
+
+    .news__item-img {
+      img {
+        max-height: 212px;
+
+        @include mq.mq("sp") {
+          max-height: 100px;
+        }
+      }
+    }
+
+    .news__item-title {
+      font-weight: 700;
+      margin-top: 11px;
+      font-size: 16px;
+      line-height: (24/16);
+
+      @include mq.mq("sp") {
+        margin-top: 7px;
+        font-size: 12px;
+        line-height: (18/12);
+      }
+    }
+
+    .news__item-date {
+      margin-top: 12px;
+      font-size: 14px;
+
+      @include mq.mq("sp") {
+        margin-top: 8px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.news-sub-detail {
+  padding: 0 0 35px;
+  margin-top: 73px;
+
+  @include mq.mq("sp") {
+    padding: 0 0 35px;
+    margin-top: 51px;
+  }
+}
+
+.news-sub-detail__inner {
+  width: 100%;
+  max-width: 790px;
+}
+
+.news-sub-detail__img {
+  img {
+    max-height: 430px;
+    object-fit: cover;
+  }
+}
+
+.news-sub-detail__title {
+  margin-top: 22px;
+  font-size: 28px;
+  line-height: (40/28);
+  font-weight: bold;
+
+  @include mq.mq("sp") {
+    font-size: 20px;
+    margin-top: 25px;
+  }
+}
+
+.news-sub-detail__meta {
+  margin-top: 39px;
+  display: flex;
+
+  @include mq.mq("sp") {
+    margin-top: 20px;
+  }
+}
+
+.news-sub-detail__date {
+  font-weight: bold;
+  font-size: 14px;
+  padding-right: 20px;
+  position: relative;
+
+  // しきり
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: var.$color-text-black;
+  }
+}
+
+.news-sub-detail__category {
+  font-weight: bold;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.news-sub-detail__body {
+  margin-top: 35px;
+
+  p {
+    line-height: (32/16);
+
+    @include mq.mq("sp") {
+      font-size: 14px;
+      line-height: (28/14);
+    }
+  }
+
+  .wp-block-image {
+    margin: 36px 0;
+    img {
+      max-height: 430px;
+      object-fit: cover;
+    }
+  }
+
+  h2 {
+    margin-top: 92px;
+    margin-bottom: 17px;
+    padding-left: 22px;
+    position: relative;
+    font-size: 24px;
+    font-weight: 700;
+
+    @include mq.mq("sp") {
+      margin-top: 75px;
+      margin-bottom: 18px;
+      font-size: 18px;
+      line-height: (28/18);
+      padding-left: 16px;
+    }
+
+    //たて線
+    &::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var.$color-text-black;
+
+      @include mq.mq("sp") {
+        width: 5px;
+      }
+    }
+  }
+
+  h3 {
+    margin-top: 54px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    position: relative;
+    font-size: 20px;
+    font-weight: 700;
+
+    @include mq.mq("sp") {
+      margin-top: 56px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      padding-bottom: 9px;
+    }
+
+    //下線
+    &::after {
+      position: absolute;
+      content: "";
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var.$color-text-black;
+    }
+  }
+
+  h4 {
+    margin-top: 53px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 700;
+
+    @include mq.mq("sp") {
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+  }
+
+  ul {
+    margin-top: 26px;
+    margin-left: 26px;
+    display: inline-block;
+
+    li {
+      position: relative;
+      padding-left: 10px;
+
+      @include mq.mq("sp") {
+        padding-left: 6px;
+      }
+
+      // 円
+      &::before {
+        position: absolute;
+        content: "";
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        width: 2px;
+        height: 2px;
+        background: var.$color-text-black;
+      }
+
+      &:not(:first-child) {
+        margin-top: 5px;
+
+        @include mq.mq("sp") {
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+
+  blockquote {
+    margin: 30px 0 0 0;
+    padding: 40px;
+    background: #f8f8f8;
+
+    @include mq.mq("sp") {
+      padding: 21px 24px;
+    }
+
+    p {
+      line-height: (32/16);
+    }
+
+    cite {
+      margin-top: 13px;
+      text-align: right;
+      display: block;
+      font-size: 14px;
+      font-style: normal;
+
+      @include mq.mq("sp") {
+        margin-top: 15px;
+        padding-right: 21px;
+      }
+    }
+  }
+}
+
+.shop__inner {
+  max-width: 790px;
+  width: 100%;
+  padding-bottom: 38px;
+
+  @include mq.mq("sp") {
+    padding-bottom: 32px;
+  }
+}
+
+.shop__items {
+  margin-top: 77px;
+
+  @include mq.mq("sp") {
+    margin-top: 52px;
+  }
+}
+
+.shop__item {
+  &:not(:first-child) {
+    margin-top: 121px;
+
+    @include mq.mq("sp") {
+      margin-top: 58px;
+    }
+  }
+}
+
+.shop__content {
+  margin-top: 19px;
+
+  .access__info {
+    margin-top: 25px;
+
+    @include mq.mq("sp") {
+      margin-top: 19px;
+    }
+  }
+}
+
+.shop__title {
+  margin-top: 24px;
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+  padding-left: 24px;
+
+  @include mq.mq("sp") {
+    font-size: 20px;
+    padding-left: 14px;
+  }
+
+  //縦線
+  &::before {
+    position: absolute;
+    content: "";
+    left: 1px;
+    top: 0px;
+    width: 7px;
+    height: 90%;
+    background: var.$color-text-black;
+
+    @include mq.mq("sp") {
+      top: 0px;
+      width: 6px;
+      height: 92%;
+    }
+  }
+}
+
+//gift
+
+.gift__inner {
+  width: 100%;
+  max-width: 1200px;
+  padding-bottom: 37px;
+
+  @include mq.mq("tab") {
+    max-width: 700px;
+  }
+
+  @include mq.mq("sp") {
+    padding-bottom: 31px;
+  }
+}
+
+.gift__list {
+  margin-top: 80px;
+
+  @include mq.mq("sp") {
+    margin-top: 52px;
+  }
+}
+
+.gift__items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gift__items-top-block {
+  display: flex;
+
+  @include mq.mq("tab") {
+    display: block;
+  }
+
+  @include mq.mq("sp") {
+    display: block;
+  }
+}
+
+.gift__item-title {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+
+  @include mq.mq("sp") {
+    margin-top: 6px;
+  }
+}
+
+.gift__item-price {
+  font-family: var.$font-family-english-Damion;
+  line-height: 1;
+  margin-top: 4px;
+  font-size: 24px;
+  text-align: center;
+
+  @include mq.mq("sp") {
+    margin-top: 2px;
+  }
+}
+
+.gift__item-link {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.gift__item-top {
+  width: 528px;
+  margin-right: 40px;
+
+  @include mq.mq("tab") {
+    width: 100%;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+  }
+
+  .gift__item-title {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: 700;
+
+    @include mq.mq("sp") {
+      font-size: 20px;
+    }
+  }
+
+  .gift__item-price {
+    font-family: var.$font-family-english-Damion;
+    line-height: 1;
+    margin-top: 4px;
+    font-size: 32px;
+    text-align: center;
+
+    @include mq.mq("sp") {
+      font-size: 28px;
+    }
+  }
+
+  .gift__item-link {
+    margin-top: 16px;
+    text-align: center;
+  }
+}
+
+.gift__item-top-other {
+  width: calc(100% - (528px + 40px));
+
+  @include mq.mq("tab") {
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .gift__item {
+    @include mq.mq("pc") {
+      width: calc(50% - 40px * 1 / 2);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 40px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 40px;
+      }
+    }
+
+    @include mq.mq("tab") {
+      width: calc(50% - 24px * 1 / 2);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 24px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 38px;
+      }
+    }
+
+    @include mq.mq("sp") {
+      width: calc(50% - 18px * 1 / 2);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 18px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 38px;
+      }
+    }
+  }
+}
+
+.gift__items-sub-block {
+  margin-top: 46px;
+
+  @include mq.mq("sp") {
+    margin-top: 40px;
+  }
+
+  .gift__item {
+    @include mq.mq("pc") {
+      width: calc(25% - 40px * 3 / 4);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(4n + 1)) {
+        margin-left: 40px;
+      }
+
+      //5つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 5) {
+        margin-top: 40px;
+      }
+    }
+
+    @include mq.mq("tab") {
+      width: calc(50% - 24px * 1 / 2);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 24px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 38px;
+      }
+    }
+
+    @include mq.mq("sp") {
+      width: calc(50% - 18px * 1 / 2);
+
+      //最初のアイテム要素にはmargin-leftを適用しない
+      &:not(:nth-child(2n + 1)) {
+        margin-left: 18px;
+      }
+
+      //3つめ以降のアイテムに対しmargin-topをつける
+      &:nth-child(n + 3) {
+        margin-top: 38px;
+      }
+    }
+  }
+}
+
+.gift__rapping {
+  margin-top: 100px;
+  display: flex;
+  padding: 75px 55px 78px;
+  background: #fff;
+  position: relative;
+  border: 4px solid var.$color-main;
+
+  @include mq.mq("tab") {
+    margin-top: 60px;
+    display: block;
+    padding: 35px;
+  }
+
+  @include mq.mq("sp") {
+    margin-top: 57px;
+    display: block;
+    padding: 35px;
+  }
+
+  //内側の枠線
+  &::before {
+    content: "";
+    border: 1px solid var.$color-main;
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    right: 6px;
+    left: 6px;
+  }
+}
+
+.gift__wrapping-content {
+  width: calc(100% - (460px + 60px));
+  margin-right: 64px;
+
+  @include mq.mq("tab") {
+    width: 100%;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+  }
+}
+
+.gift__wrapping__title {
+  font-size: 24px;
+  line-height: (40/24);
+  font-weight: 700;
+  padding-bottom: 24px;
+
+  //下部の線
+  background-image: linear-gradient(to right, #000 4px, transparent 4px);
+  background-size: 12px 4px;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+
+  @include mq.mq("sp") {
+    font-size: 16px;
+    line-height: (28/16);
+    padding: 0 8px 24px;
+  }
+}
+
+.gift__wrapping-message {
+  margin-top: 34px;
+  line-height: (32/16);
+
+  @include mq.mq("sp") {
+    margin-top: 20px;
+    font-size: 12px;
+    line-height: (24/12);
+  }
+}
+
+.gift__wrapping-img {
+  width: 460px;
+
+  @include mq.mq("tab") {
+    width: 100%;
+    margin-top: 36px;
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin-top: 36px;
+  }
+}
+
+//contact
+.contact__inner {
+  max-width: 790px;
+  width: 100%;
+  padding-top: 77px;
+  padding-bottom: 45px;
+  color: var.$color-main;
+
+  @include mq.mq("sp") {
+    padding-top: 51px;
+    padding-bottom: 39px;
+  }
+}
+
+.contact__title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+
+  @include mq.mq("sp") {
+    font-size: 20px;
+  }
+}
+
+.contact__message {
+  margin-top: 23px;
+  line-height: (23/16);
+
+  @include mq.mq("sp") {
+    margin-top: 25px;
+    font-size: 14px;
+    line-height: (24/14);
+  }
+}
+
+//contact-thanks
+.contact-thanks__inner {
+  max-width: 790px;
+  width: 100%;
+  padding-top: 77px;
+  padding-bottom: 38px;
+
+  @include mq.mq("sp") {
+    padding-top: 51px;
+    padding-bottom: 29px;
+  }
+}
+
+//not-found
+
+.not-found {
+  margin-top: 40px;
+}
+
+.not-found-page__inner {
+  width: 100%;
+  max-width: 1200px;
+  padding-bottom: 40px;
+
+  @include mq.mq("tab") {
+    max-width: 700px;
+  }
+
+  @include mq.mq("sp") {
+    padding-bottom: 31px;
+  }
+}
+
+.not-found__head {
+  text-align: center;
+  color: var.$color-accent;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.not-found__lead {
+  text-align: center;
+  color: var.$color-accent;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.not-found__content {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.not-found__btn {
+  margin-top: 30px;
+  text-align: center;
+}

@@ -1,0 +1,169 @@
+@use "variables" as var;
+@use "media-query" as mq;
+
+.contact-form__dl {
+  margin-top: 79px;
+
+  @include mq.mq("sp") {
+    margin-top: 58px;
+  }
+}
+
+.contact-form__label {
+  width: 198px;
+  height: 23px;
+
+  @include mq.mq("sp") {
+    width: 100%;
+  }
+
+  label {
+    padding: 13px 0px 13px;
+    font-weight: 700;
+  }
+
+  & .is-required {
+    margin-left: 8px;
+    background: var.$color-accent;
+    color: #fff;
+    font-size: 11px;
+    line-height: 19px;
+    padding: 1px 6px 2px;
+    text-align: center;
+    border-radius: 2px;
+  }
+}
+
+.contact-form__label-kind,
+.contact-form__label-message {
+  align-self: flex-start;
+}
+
+.contact-form__label-message {
+  margin-top: 12px;
+}
+
+.contact-form__row {
+  display: flex;
+  align-items: center;
+
+  @include mq.mq("sp") {
+    display: block;
+  }
+
+  &:not(:first-child) {
+    margin-top: 37px;
+  }
+}
+
+.contact-form__input {
+  width: calc(100% - 198px);
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  [type="text"],
+  [type="email"],
+  [type="tel"] {
+    border: 1px solid var.$color-text-black;
+    background: #fff;
+    padding: 13px 16px 10px;
+    appearance: none;
+    border-radius: 6px;
+    color: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  textarea {
+    border: 1px solid var.$color-text-black;
+    background: #fff;
+    padding: 13px 16px 12px;
+    appearance: none;
+    border-radius: 6px;
+    color: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    width: 100%;
+    resize: vertical;
+    height: 15em;
+
+    @include mq.mq("sp") {
+      height: 12.5em;
+    }
+  }
+}
+
+//ラジオボタン
+.contact-form__radio-wrap {
+  [type="radio"] {
+    //デフォルトのボタンは非表示
+    display: none;
+
+    &:checked + .wpcf7-list-item-label:before {
+      background-color: var.$color-accent;
+      box-shadow: inset 0 0 0 5px #fff;
+    }
+  }
+
+  @include mq.mq("sp") {
+    width: 100%;
+    margin-top: 21px;
+  }
+
+  label {
+    display: flex;
+  }
+
+  //ラジオボタンのラベル
+  .wpcf7-list-item-label {
+    padding-left: 36px;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    @include mq.mq("sp") {
+      padding-left: 34px;
+    }
+
+    //ラジオボタンの周りの円
+    &::before {
+      content: "";
+      background: #fff;
+      border-radius: 100%;
+      border: 1px solid var.$color-text-black;
+      display: inline-block;
+      width: 23px;
+      height: 23px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease 0s;
+    }
+  }
+}
+
+.wpcf7-list-item {
+  margin: 0;
+  display: block;
+
+  &:not(:first-child) {
+    margin-top: 14px;
+  }
+}
+
+.contact-form__privacy {
+  margin-top: 34px;
+  font-size: 14px;
+  line-height: (20/14);
+
+  @include mq.mq("sp") {
+    margin-top: 12px;
+    line-height: (24/14);
+  }
+}
